@@ -1,4 +1,5 @@
 import { db } from "../libs/db.js"
+import { submitBatch } from "../libs/languageid.libs.js";
 
 export const createProblem = async (req, res) => {
 
@@ -27,7 +28,31 @@ export const createProblem = async (req, res) => {
         }
       ))
 
-      
+      const submissionResult = await submitBatch(submissions);
+
+      //get the token after submissions
+      const token = submissionResult.map(res => res.token)
+      console.log("Submission results token", token)
+      // polling now
+      const results = await pollBatchResults(token);
+
+      for (i = 0; i < results.length; i++) {
+        const result = results[i];
+
+        if (result.status.id !== 3) {
+          return res.status(400).json({ error: `Testcase ${i + 1} is failed for the ${language}` })
+        }
+      }
+      //now save the problem to the DB
+      const newproblem = await db.problem.create({
+        data: {
+          title, description, difficulty,
+          tags, examples, constraints, testcases, codeSnippets, referenceSolutions
+          , userId: req.user.id,
+        }
+      })
+
+      return res.status(201).json(newproblem)
     }
   } catch (error) {
 
