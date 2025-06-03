@@ -1,25 +1,29 @@
-export const getJudge0LanguageId=(language)=>{
-    const languageMap= {
+import axios from "axios";
+
+export const getJudge0LanguageId = (language) => {
+    const languageMap = {
         "PYTHON": 71,
-        "JAVA":62,
-        "JAVASCRIPT":63,
+        "JAVA": 62,
+        "JAVASCRIPT": 63,
     }
     return languageMap[language.toUpperCase()]
     //using square bracket because the object keys are in "" format
 }
 
-const sleep=(ms)=> new Promise((resolve)=>setImmediate(resolve,ms))
+const sleep = (ms) => new Promise((resolve) => setImmediate(resolve, ms))
 
-export const pollBatchResults=async(tokens)=>{
+export const pollBatchResults = async (tokens) => {
     while (true) {
-        const {data}= await axios.get(`${process.env.JUDGE0_API_URL}/submissions/batch`,{
-            params:tokens.join(","),
-            base64_encoded:false,
+        const { data } = await axios.get(`${process.env.JUDGE0_API_URL}/submissions/batch`, {
+            params: {
+                tokens:tokens.join(","),
+                base64_encoded:false,
+            }
         })
 
-        const results= data.submissions;
+        const results = data.submissions;
         //The every() method executes a function for each array element.
-        const isAllDone=results.every((res)=>res.status.id!==1 && res.status.id!==2)
+        const isAllDone = results.every((res) => res.status.id !== 1 && res.status.id !== 2)
 
         if (isAllDone) {
             return results
@@ -28,6 +32,8 @@ export const pollBatchResults=async(tokens)=>{
     }
 }
 
-export const submitBatch= async (submissions) => {
-    const {data} =await axios.post(`${process.env.JUDGE0_API_URL}/submissions/batch?base64_encoded=false`,{submissions})
+export const submitBatch = async (submissions) => {
+    const { data } = await axios.post(`${process.env.JUDGE0_API_URL}/submissions/batch?base64_encoded=false`, { submissions })
+    console.log("submit batch log", data);
+    return data;
 }
