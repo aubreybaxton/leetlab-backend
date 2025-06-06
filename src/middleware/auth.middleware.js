@@ -33,6 +33,7 @@ export const authMiddleware = async (req, res, next) =>{
             return res.status(404).json({message:"User Not Found"})
          }
          req.user=user;
+         
          next();
     } catch (error) {
         console.log("Error while Check middleware ",error);
