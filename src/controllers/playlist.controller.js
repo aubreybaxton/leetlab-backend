@@ -1,5 +1,4 @@
 import { db } from "../libs/db.js";
-import playlistRoutes from "../routes/playlist.routes.js";
 
 
 export const getAllListDetials= async(req, res)=>{
@@ -79,8 +78,9 @@ export const addProblemToPlaylist= async(req, res)=>{
         
         const {playlistId}= req.params;
         const {problemIds}= req.body;
+        console.log("problemids", problemIds)
 
-        if (!Array.isArray(problemIds||problemIds.length===0)) {
+        if (!Array.isArray(problemIds)||problemIds.length===0) {
             return res.status(404).json({error:"Invalid problem Ids"})
         }
 
@@ -111,7 +111,6 @@ export const deletePlaylist= async(req, res)=>{
                 id:playlistId,
             }
         })
-
         res.status(200).json({
             success:true,
             message:"Playlist Deleted Successfully",
