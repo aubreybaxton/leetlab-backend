@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 import authRoutes from "./routes/auth.routes.js";
 import problemRoutes from "./routes/problem.routes.js";
 import executionRoutes from "./routes/execution.routes.js";
@@ -33,5 +34,5 @@ app.use('/api/v1/playlist', playlistRoutes )
 
 
 app.listen(process.env.PORT, ()=>{
-    console.log("SERVER IS UP AND RUNNING")
+    console.log(`SERVER IS UP ON PORT: ${process.env.PORT} AND RUNNING`)
 })
