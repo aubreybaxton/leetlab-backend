@@ -85,7 +85,17 @@ export const createProblem = async (req, res) => {
 
 export const getAllProblems = async (req, res) => {
   try {
-    const getProblems = await db.problem.findMany()
+    const getProblems = await db.problem.findMany(
+      {
+        include:{
+          solvedBy:{
+            where:{
+              userId:req.user.id
+            }
+          }
+        }
+      }
+    )
     console.log(getProblems)
 
     if (!getProblems) {
