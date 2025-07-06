@@ -8,7 +8,7 @@ export const createProblem = async (req, res) => {
   const { title, description, difficulty,
     tags, examples, constraints, testcases, codeSnippets, referenceSolutions
   } = req.body;
-  console.log("problem create", req.body.title)
+  //console.log("problem create", req.body.title)
 
   if (req.user.role !== "ADMIN") {
     return res.status(403).json({ error: "You are not allowed" })
@@ -96,7 +96,7 @@ export const getAllProblems = async (req, res) => {
         }
       }
     )
-    console.log(getProblems)
+    //console.log(getProblems)
 
     if (!getProblems) {
       return res.status(404).json(
@@ -258,7 +258,7 @@ export const deleteProblem = async (req, res) => {
 }
  export const getAllProblemSolvedByUser = async (req, res) => {
      const getUserId= req.user.id;
-     console.log(getUserId)
+     //console.log(getUserId)
 
      try {
       const problems = await db.problem.findMany({
