@@ -6,9 +6,9 @@ import { submitBatch, pollBatchResults } from "../libs/languageid.libs.js";
 export const createProblem = async (req, res) => {
 
   const { title, description, difficulty,
-    tags, examples, constraints, testcases, codeSnippets, referenceSolutions
+    tags, examples, constraints, testcases, codeSnippets, referenceSolutions,hints, editorial
   } = req.body;
-  //console.log("problem create", req.body.title)
+  console.log("problem create", req.body.title)
 
   if (req.user.role !== "ADMIN") {
     return res.status(403).json({ error: "You are not allowed" })
@@ -63,7 +63,7 @@ export const createProblem = async (req, res) => {
       const newproblem = await db.problem.create({
         data: {
           title, description, difficulty,
-          tags, examples, constraints, testcases, codeSnippets, referenceSolutions
+          tags, examples, constraints, testcases, codeSnippets, referenceSolutions,hints,editorial
           , userId: req.user.id,
         }
       })
