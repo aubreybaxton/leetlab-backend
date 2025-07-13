@@ -26,7 +26,6 @@ export const executeCode = async (req, res) => {
         }))
 
         // send batch of submission to judge0
-
         const submitResponse = await submitBatch(submissions)
 
         const tokens = submitResponse.map((res) => (res.token))
@@ -43,26 +42,30 @@ export const executeCode = async (req, res) => {
             const stdout = result.stdout?.trim();
             const expected_output = expected_outputs[i]?.trim();
             const passed = stdout === expected_output;
+
+            
             if (!passed) {
-                return allPassed = false;
+             allPassed = false;
             }
+            console.log(`test case : #${i+1}`)
+             console.log(` Input test case - #${i+1}: ${stdin[i]}`)
+             console.log(`expected output for the test case - #${i+1} : ${expected_output}`)
+             console.log(`Actual output for the test case - #${i+1}: ${stdout}`)
+             console.log(` Matched test case - #${i+1} : ${passed}`)
+
             return {
                 testCase: i + 1,
                 passed,
                 stdout,
                 expected: expected_output,
                 stderr: result.stderr || null,
-                compileOutput: result.compiled_output,
+                compileOutput: result.compile_output,
                 status: result.status.description,
-                memory: result.memory ? `${result.memory}KB` : undefined,
+                memory: result.memory ? `${result.memory} KB` : undefined,
                 time: result.time ? `${result.time} s` : undefined,
 
             }
-            // console.log(`test case : #${i+1}`)
-            // console.log(` Input test case - #${i+1}: ${stdin[i]}`)
-            // console.log(`expected output for the test case - #${i+1} : ${expected_output}`)
-            // console.log(`Actual output for the test case - #${i+1}: ${stdout}`)
-            // console.log(` Matched test case - #${i+1} : ${passed}`)
+             
         })
         console.log("Detailed output", detailedResult)
 
