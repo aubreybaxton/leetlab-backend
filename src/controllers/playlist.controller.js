@@ -15,7 +15,7 @@ export const getAllListDetials= async(req, res)=>{
 
         res.status(200).json({
             success:true,
-            message:"Fecting successful",
+            message:"Fetching successful",
             playlists
         })
     } catch (error) {
