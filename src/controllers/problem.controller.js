@@ -40,7 +40,7 @@ export const createProblem = async (req, res) => {
       });
 
       const submissionResult = await submitBatch(submissions);
-      console.log("Submission results ", submissionResult)
+      console.log("Submission results----------- ", submissionResult)
       //get the token after submissions
       const token = submissionResult.map(res => res.token)
       console.log("Submission results token", token)
