@@ -23,7 +23,7 @@ export const createProblem = async (req, res) => {
 
       }
       const submissions = testcases.map(({ input, output }) => (
-        console.log("language id, solutionCode ", languageId, solutionCode, input, output),
+        console.log("Submissions input output test cases ", languageId, solutionCode, input, output),
         {
           source_code: solutionCode,
           language_id: languageId,
@@ -32,12 +32,12 @@ export const createProblem = async (req, res) => {
         }
 
       ))
-      console.log("Sending to Judge0:", {
-        source_code: req.body.referenceSolutions["JAVASCRIPT"],
-        language_id: 63,
-        stdin: "100 200",
-        expected_output: "300\n"
-      });
+      // console.log("Sending to Judge0:", {
+      //   source_code: req.body.referenceSolutions["JAVASCRIPT"],
+      //   language_id: 63,
+      //   stdin: "100 200",
+      //   expected_output: "300\n"
+      // });
 
       const submissionResult = await submitBatch(submissions);
       console.log("Submission results----------- ", submissionResult)

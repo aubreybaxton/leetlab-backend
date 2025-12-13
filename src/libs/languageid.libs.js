@@ -33,6 +33,7 @@ export const pollBatchResults = async (tokens) => {
 }
 
 export const submitBatch = async (submissions) => {
+    console.log("submissions to be sent", submissions)
     const { data } = await axios.post(`${process.env.ONLINE_JUDGE0_API_URL}/submissions/batch?base64_encoded=false`, { submissions })
     console.log("submit batch log", data);
     return data;
