@@ -1,7 +1,7 @@
 import { db } from "../libs/db.js";
 
 
-export const getAllListDetials= async(req, res)=>{
+export const getPlaylist= async(req, res)=>{
     try {
         const playlists = await db.playlist.findMany({
             where:{
@@ -76,19 +76,30 @@ export const createPlaylist= async(req, res)=>{
 export const addProblemToPlaylist= async(req, res)=>{
     try {
         
-        const {playlistId}= req.params;
-        const {problemIds}= req.body;
-        console.log("problemids", problemIds)
+        const {playlistId}= req.body;
+        const {problemId}= req.params;
+        console.log("problemids", problemId)
 
-        if (!Array.isArray(problemIds)||problemIds.length===0) {
-            return res.status(404).json({error:"Invalid problem Ids"})
-        }
+        // if (!Array.isArray(problemId)||problemId.length===0) {
+        //     return res.status(404).json({error:"Invalid problem Ids"})
+        // }
 
-        const problemInPlaylist= await db.problemInPlaylist.createMany({
-            data:problemIds.map((problemId)=>({
-                playlistId,
-                problemId
-            }))
+        // const problemInPlaylist= await db.problemInPlaylist.createMany({
+        //     data:problemId.map((problemId)=>({
+        //         playlistId,
+        //         problemId
+        //     }))
+        // })
+
+        const problemInPlaylist= await db.problemInPlaylist.create({
+            data: {
+                problem: {
+                  connect: { id: problemId }
+                },
+                playlist: {
+                  connect: { id: playlistId }
+                }
+              }
         })
 
         res.status(201).json({
