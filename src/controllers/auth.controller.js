@@ -36,8 +36,9 @@ export const register= async (req, res) => {
         })
         // put jwt instead of "jwt"-- mistake
         res.cookie("jwt", token,{
+            domain:process.env.COOKIE_DOMAIN,
             httpOnly:true,
-            sameSite:"Strict",
+            sameSite:"lax",
             secure:process.env.NODE_ENV!== "development",
             maxAge:1000*60*60*24*7 // 7days
         })
