@@ -78,6 +78,7 @@ export const login= async (req, res) => {
          const token= jwt.sign({id:user.id},process.env.JWT_SECRET,{expiresIn:"7d"});
 
          res.cookie("jwt", token,{
+            domain:process.env.COOKIE_DOMAIN,
             httpOnly:true,
             sameSite:"Strict",
             secure:process.env.NODE_ENV!== "development",
@@ -104,9 +105,11 @@ export const login= async (req, res) => {
 export const logout= async (req, res) => {
     try {
         res.clearCookie("jwt",{
+            domain:process.env.COOKIE_DOMAIN,
             httpOnly:true,
-            sameSite:"Strict",
+            sameSite:"lax",
             secure:process.env.NODE_ENV!== "development",
+            maxAge:1000*60*60*24*7 // 7days
         })
 
         res.status(200).json({
