@@ -2,12 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors"
-import authRoutes from "./routes/auth.routes.js";
-import problemRoutes from "./routes/problem.routes.js";
-import executionRoutes from "./routes/execution.routes.js";
-import submissionRoutes from "./routes/submission.routes.js";
-import playlistRoutes from "./routes/playlist.routes.js";
-import { corsOptions } from "./constants/cors.config.js";
+import authRoutes from "../src/routes/auth.routes.js";
+import problemRoutes from "../src/routes/problem.routes.js";
+import executionRoutes from "../src/routes/execution.routes.js";
+import submissionRoutes from "../src/routes/submission.routes.js";
+import playlistRoutes from "../src/routes/playlist.routes.js";
+import { corsOptions } from "../src/constants/cors.config.js";
 
 dotenv.config();
 
