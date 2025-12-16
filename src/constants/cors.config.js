@@ -10,6 +10,7 @@ const corsOptions = {
       "http://10.0.2.2:8081",
       "https://www.aubreybaxton.com",
       "https://aubreybaxton.com",
+      "https://api.aubreybaxton.com",
       process.env.FRONTEND_URL,
     ],
     methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
