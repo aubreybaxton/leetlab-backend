@@ -36,11 +36,11 @@ export const register= async (req, res) => {
         })
         // put jwt instead of "jwt"-- mistake
         res.cookie("jwt", token,{
+            domain:process.env.COOKIE_DOMAIN,
+            httpOnly:true,
+            sameSite:"lax",
             secure: true,
-             httpOnly:true,
-            // domain:process.env.COOKIE_DOMAIN,
-            // sameSite:"lax",
-            // maxAge:1000*60*60*24*7 // 7days
+            maxAge:1000*60*60*24*7 // 7days
         })
 
         res.status(201).json({
@@ -78,11 +78,11 @@ export const login= async (req, res) => {
          const token= jwt.sign({id:user.id},process.env.JWT_SECRET,{expiresIn:"7d"});
 
          res.cookie("jwt", token,{
-             secure: true,
-             httpOnly:true,
-            // domain:process.env.COOKIE_DOMAIN,
-            // sameSite:"lax",
-            // maxAge:1000*60*60*24*7 // 7days
+            domain:process.env.COOKIE_DOMAIN,
+            httpOnly:true,
+            sameSite:"lax",
+            secure: true,
+            maxAge:1000*60*60*24*7 // 7days
         })
 
         res.status(200).json({
@@ -105,11 +105,11 @@ export const login= async (req, res) => {
 export const logout= async (req, res) => {
     try {
         res.clearCookie("jwt",{
+            domain:process.env.COOKIE_DOMAIN,
+            httpOnly:true,
+            sameSite:"lax",
             secure: true,
-             httpOnly:true,
-            // domain:process.env.COOKIE_DOMAIN,
-            // sameSite:"lax",
-            // maxAge:1000*60*60*24*7 // 7days
+            maxAge:1000*60*60*24*7 // 7days
         })
 
         res.status(200).json({
